@@ -9,6 +9,91 @@ from .insight_engine import InsightEngine
 from .report import ReportGenerator
 
 
+class AnalysisResult:
+    """
+    Wrapper class for analysis results with export capabilities.
+    
+    Provides convenient access to analysis outputs and export methods.
+    """
+    
+    def __init__(self, profile=None, kpis=None, insights=None, report=None, 
+                 business_context=None, analyzer=None):
+        """Initialize analysis results."""
+        self.profile = profile
+        self.kpis = kpis
+        self.insights = insights
+        self.report = report
+        self.business_context = business_context
+        self.analyzer = analyzer
+    
+    def to_html(self, filepath=None):
+        """
+        Export report as HTML.
+        
+        Parameters
+        ----------
+        filepath : str, optional
+            Path to save the HTML file. If None, returns HTML string.
+            
+        Returns
+        -------
+        str or None
+            HTML string if filepath is None, else None (saves to file)
+        """
+        if isinstance(self.report, str):
+            html_content = self.report
+        elif isinstance(self.report, pd.DataFrame):
+            html_content = self.report.to_html()
+        else:
+            html_content = str(self.report)
+        
+        if filepath:
+            with open(filepath, 'w', encoding='utf-8') as f:
+                f.write(html_content)
+            return filepath
+        return html_content
+    
+    def to_pdf(self, filepath):
+        """
+        Export report as PDF (requires pdfkit or similar).
+        
+        Parameters
+        ----------
+        filepath : str
+            Path to save the PDF file
+        """
+        try:
+            import pdfkit
+            html = self.to_html()
+            pdfkit.from_string(html, filepath)
+            return filepath
+        except ImportError:
+            raise ImportError("pdfkit required for PDF export. Install with: pip install pdfkit")
+    
+    def to_dataframe(self):
+        """Get report as pandas DataFrame if applicable."""
+        if isinstance(self.report, pd.DataFrame):
+            return self.report
+        return None
+    
+    def __repr__(self):
+        """String representation."""
+        return (f"AnalysisResult(profile_keys={list(self.profile.keys()) if isinstance(self.profile, dict) else 'N/A'}, "
+                f"kpis_count={len(self.kpis) if self.kpis else 0}, "
+                f"insights_count={len(self.insights) if self.insights else 0})")
+    
+    def __str__(self):
+        """Detailed string representation."""
+        lines = ["AnalystX Analysis Results", "=" * 40]
+        if self.business_context:
+            lines.append(f"Context: {self.business_context}")
+        lines.append(f"Profile: {type(self.profile).__name__}")
+        lines.append(f"KPIs: {type(self.kpis).__name__}")
+        lines.append(f"Insights: {type(self.insights).__name__}")
+        lines.append(f"Report: {type(self.report).__name__}")
+        return "\n".join(lines)
+
+
 class AnalystX:
     """Main analyzer class for data profiling, KPI calculation, and insight generation."""
 
@@ -138,12 +223,19 @@ def analyze(data, business_context=None, output_format="html"):
 
     Returns
     -------
-    dict
-        Dictionary containing:
-        - 'profile': Data profile results
-        - 'kpis': Calculated KPIs
-        - 'insights': Generated insights
-        - 'report': Generated report
+    AnalysisResult
+        Result object containing:
+        - result.profile : Data profile results
+        - result.kpis : Calculated KPIs
+        - result.insights : Generated insights
+        - result.report : Generated report
+        - result.business_context : Analysis context
+        - result.analyzer : AnalystX instance
+        
+        Methods:
+        - result.to_html(filepath=None) : Export as HTML
+        - result.to_pdf(filepath) : Export as PDF
+        - result.to_dataframe() : Get as DataFrame
 
     Example
     -------
@@ -151,7 +243,9 @@ def analyze(data, business_context=None, output_format="html"):
     >>> from analystx import analyze
     >>> df = pd.read_csv('sales_data.csv')
     >>> results = analyze(df, business_context="Sales analysis")
-    >>> print(results['insights'])
+    >>> results.to_html("report.html")  # Export to HTML
+    >>> print(results.insights)  # Access insights
+    >>> print(results.kpis)  # Access KPIs
     """
     analyzer = AnalystX(data=data)
     profile = analyzer.profile()
@@ -159,11 +253,11 @@ def analyze(data, business_context=None, output_format="html"):
     insights = analyzer.generate_insights()
     report = analyzer.create_report(output_format=output_format)
 
-    return {
-        'profile': profile,
-        'kpis': kpis,
-        'insights': insights,
-        'report': report,
-        'business_context': business_context,
-        'analyzer': analyzer,
-    }
+    return AnalysisResult(
+        profile=profile,
+        kpis=kpis,
+        insights=insights,
+        report=report,
+        business_context=business_context,
+        analyzer=analyzer,
+    )
