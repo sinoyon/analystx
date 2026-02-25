@@ -29,7 +29,7 @@ classifiers = [
     "Development Status :: 3 - Alpha",
     "Environment :: Console",
     "Intended Audience :: Developers",
-    "Intended Audience :: Data Scientists",
+    "Intended Audience :: Science/Research",
     "Intended Audience :: Information Technology",
     "License :: OSI Approved :: MIT License",
     "Natural Language :: English",
