@@ -46,17 +46,17 @@ classifiers = [
     "Topic :: Scientific/Engineering",
 ]
 
+dependencies = [
+    "pandas>=1.5.0",
+    "numpy>=1.24.0",
+]
+
 [project.urls]
 Homepage = "https://github.com/sinoyon/analystx"
 Documentation = "https://analystx.readthedocs.io"
 Repository = "https://github.com/sinoyon/analystx"
 "Bug Tracker" = "https://github.com/sinoyon/analystx/issues"
 "Changelog" = "https://github.com/sinoyon/analystx/releases"
-
-dependencies = [
-    "pandas>=1.5.0",
-    "numpy>=1.24.0",
-]
 
 [project.optional-dependencies]
 dev = [
