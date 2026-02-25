@@ -1,0 +1,66 @@
+<html>
+<head>
+<style>
+
+        body { font-family: Arial, sans-serif; margin: 20px; background-color: #f5f5f5; }
+        .header { background-color: #2c3e50; color: white; padding: 20px; border-radius: 5px; }
+        .section { background-color: white; margin: 20px 0; padding: 15px; border-radius: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .section h2 { color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 10px; }
+        .metric { display: inline-block; background-color: #ecf0f1; padding: 15px; margin: 10px; border-radius: 5px; min-width: 150px; }
+        .metric-value { font-size: 24px; font-weight: bold; color: #3498db; }
+        .metric-label { font-size: 12px; color: #7f8c8d; }
+        .issue { background-color: #ffebee; padding: 10px; margin: 5px 0; border-left: 4px solid #e74c3c; border-radius: 3px; }
+        .recommendation { background-color: #e8f5e9; padding: 10px; margin: 5px 0; border-left: 4px solid #27ae60; border-radius: 3px; }
+        .pattern { background-color: #e3f2fd; padding: 10px; margin: 5px 0; border-left: 4px solid #2196f3; border-radius: 3px; }
+        table { width: 100%; border-collapse: collapse; margin: 10px 0; }
+        table th { background-color: #34495e; color: white; padding: 10px; text-align: left; }
+        table td { padding: 8px; border-bottom: 1px solid #ddd; }
+        table tr:hover { background-color: #f5f5f5; }
+        
+</style>
+</head>
+<body>
+<div class="header">
+<h1>📊 Data Analysis Report</h1>
+<p><strong>Context:</strong> User Subscription Analysis</p>
+<p><strong>Generated:</strong> 2026-02-25 16:18:00</p>
+</div>
+<div class="section">
+<h2>📋 Data Overview</h2>
+<div class="metric"><div class="metric-value">5</div><div class="metric-label">Total Records</div></div>
+<div class="metric"><div class="metric-value">6</div><div class="metric-label">Fields</div></div>
+<div class="metric"><div class="metric-value">100.0%</div><div class="metric-label">Data Completeness</div></div>
+</div>
+<div class="section">
+<h2>📈 Key Metrics</h2>
+<h3>Numeric Metrics</h3>
+<table>
+<tr><th>Field</th><th>Mean</th><th>Median</th><th>Min</th><th>Max</th></tr>
+<tr><td>user_id</td><td>3.0</td><td>3.0</td><td>1</td><td>5</td></tr>
+</table>
+</div>
+<div class="section">
+<h2>🔍 Identified Patterns</h2>
+<div class="pattern">20.0% of records have first_name='John'</div>
+<div class="pattern">20.0% of records have first_name='Jane'</div>
+<div class="pattern">20.0% of records have last_name='Doe'</div>
+<div class="pattern">20.0% of records have last_name='Smith'</div>
+<div class="pattern">20.0% of records have email='john.doe@example.com'</div>
+<div class="pattern">20.0% of records have email='jane.smith@example.com'</div>
+<div class="pattern">20.0% of records have signup_date='15/1/2023'</div>
+<div class="pattern">20.0% of records have signup_date='20/2/2023'</div>
+<div class="pattern">60.0% of records have subscription_status='active'</div>
+<div class="pattern">20.0% of records have subscription_status='inactive'</div>
+</div>
+<div class="section">
+<h2>⚠️ Issues & Concerns</h2>
+<div class="issue">✓ No critical issues detected</div>
+</div>
+<div class="section">
+<h2>💡 Recommendations</h2>
+<div class="recommendation">📊 Analyze subscription_status distribution - consider retention strategies</div>
+<div class="recommendation">📈 Monitor numeric metrics for trends and anomalies</div>
+<div class="recommendation">✅ Enable automated monitoring and alerts for data drift</div>
+</div>
+</body>
+</html>

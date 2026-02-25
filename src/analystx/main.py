@@ -7,6 +7,7 @@ from .profiling import DataProfiler
 from .kpi_engine import KPIEngine
 from .insight_engine import InsightEngine
 from .report import ReportGenerator
+from .insights_generator import InsightsAnalyzer, format_report_as_html
 
 
 class AnalysisResult:
@@ -251,13 +252,28 @@ def analyze(data, business_context=None, output_format="html"):
     profile = analyzer.profile()
     kpis = analyzer.calculate_kpis()
     insights = analyzer.generate_insights()
+    
+    # Generate enhanced business-focused analysis
+    enhanced_insights = InsightsAnalyzer(data)
+    analysis_summary = enhanced_insights.generate_summary()
+    
+    # Create comprehensive report
     report = analyzer.create_report(output_format=output_format)
+    
+    # Format as HTML with enhanced insights
+    html_report = format_report_as_html({
+        'title': 'Data Analysis Report',
+        'context': business_context or 'General Data Analysis',
+        'generated_at': pd.Timestamp.now().strftime('%Y-%m-%d %H:%M:%S'),
+        'data_shape': {'rows': len(data), 'columns': len(data.columns)},
+        'summary': analysis_summary,
+    })
 
     return AnalysisResult(
         profile=profile,
         kpis=kpis,
-        insights=insights,
-        report=report,
+        insights=analysis_summary,
+        report=html_report,
         business_context=business_context,
         analyzer=analyzer,
     )

@@ -15,7 +15,7 @@ Example:
     >>> report = analyzer.create_report()
 """
 
-__version__ = "0.4.0"
+__version__ = "0.5.0"
 __author__ = "MD Shariful Islam"
 __email__ = "srnoyon780@gmail.com"
 __license__ = "MIT"
