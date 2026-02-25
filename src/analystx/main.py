@@ -118,3 +118,52 @@ class AnalystX:
             format=output_format
         )
         return report
+
+
+def analyze(data, business_context=None, output_format="html"):
+    """
+    Convenience function for quick data analysis.
+
+    Performs complete analysis workflow: profiling, KPI calculation, 
+    insight generation, and report creation in one call.
+
+    Parameters
+    ----------
+    data : pd.DataFrame
+        Input data to analyze
+    business_context : str, optional
+        Business context or description of the analysis
+    output_format : str, optional
+        Output format (html, pdf, markdown). Default is 'html'
+
+    Returns
+    -------
+    dict
+        Dictionary containing:
+        - 'profile': Data profile results
+        - 'kpis': Calculated KPIs
+        - 'insights': Generated insights
+        - 'report': Generated report
+
+    Example
+    -------
+    >>> import pandas as pd
+    >>> from analystx import analyze
+    >>> df = pd.read_csv('sales_data.csv')
+    >>> results = analyze(df, business_context="Sales analysis")
+    >>> print(results['insights'])
+    """
+    analyzer = AnalystX(data=data)
+    profile = analyzer.profile()
+    kpis = analyzer.calculate_kpis()
+    insights = analyzer.generate_insights()
+    report = analyzer.create_report(output_format=output_format)
+
+    return {
+        'profile': profile,
+        'kpis': kpis,
+        'insights': insights,
+        'report': report,
+        'business_context': business_context,
+        'analyzer': analyzer,
+    }
