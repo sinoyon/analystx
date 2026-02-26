@@ -15,17 +15,18 @@ Example:
     >>> report = analyzer.create_report()
 """
 
-__version__ = "0.5.0"
-__author__ = "MD Shariful Islam"
+__version__ = "0.1.1"
+__author__ = "Shariful Islam"
 __email__ = "srnoyon780@gmail.com"
 __license__ = "MIT"
-__description__ = "Advanced analytics and KPI engine for data-driven insights"
+__description__ = "Advanced analytics and KPI engine for data-driven insights and intelligent problem-solving"
 
 # Import main classes and functions
 from .main import AnalystX, analyze, AnalysisResult
 from .profiling import DataProfiler
 from .kpi_engine import KPIEngine
 from .insight_engine import InsightEngine
+from .advanced_analytics import AdvancedAnalytics
 from .report import ReportGenerator
 
 # Public API
@@ -36,6 +37,7 @@ __all__ = [
     "DataProfiler",
     "KPIEngine",
     "InsightEngine",
+    "AdvancedAnalytics",
     "ReportGenerator",
     "__version__",
     "__author__",

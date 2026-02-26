@@ -6,6 +6,7 @@ import pandas as pd
 from .profiling import DataProfiler
 from .kpi_engine import KPIEngine
 from .insight_engine import InsightEngine
+from .advanced_analytics import AdvancedAnalytics
 from .report import ReportGenerator
 from .insights_generator import InsightsAnalyzer, format_report_as_html
 
@@ -111,10 +112,16 @@ class AnalystX:
         self.profiler = DataProfiler()
         self.kpi_engine = KPIEngine()
         self.insight_engine = InsightEngine()
+        self.advanced_analytics = None
         self.report_generator = ReportGenerator()
         self._profile = None
         self._kpis = None
         self._insights = None
+
+    def _init_advanced_analytics(self):
+        """Initialize advanced analytics module."""
+        if self.data is not None and self.advanced_analytics is None:
+            self.advanced_analytics = AdvancedAnalytics(self.data)
 
     def load_data(self, data):
         """
@@ -176,6 +183,100 @@ class AnalystX:
             self.profile()
         self._insights = self.insight_engine.generate(self.data, self._profile, self._kpis)
         return self._insights
+
+    def correlation_analysis(self):
+        """
+        Perform comprehensive correlation analysis on numeric columns.
+
+        Returns
+        -------
+        dict
+            Correlation matrix and significant relationships
+        """
+        if self.data is None:
+            raise ValueError("No data loaded. Use load_data() first.")
+        self._init_advanced_analytics()
+        return self.advanced_analytics.correlation_analysis()
+
+    def detect_anomalies(self, method="iqr"):
+        """
+        Detect anomalies and outliers in the data.
+
+        Parameters
+        ----------
+        method : str, optional
+            Detection method ('iqr' or 'zscore'). Default is 'iqr'
+
+        Returns
+        -------
+        dict
+            Anomalies found and statistics
+        """
+        if self.data is None:
+            raise ValueError("No data loaded. Use load_data() first.")
+        self._init_advanced_analytics()
+        return self.advanced_analytics.anomaly_detection(method=method)
+
+    def analyze_trends(self, time_column=None):
+        """
+        Analyze trends in numeric columns.
+
+        Parameters
+        ----------
+        time_column : str, optional
+            Column name for time-based analysis
+
+        Returns
+        -------
+        dict
+            Trend analysis results
+        """
+        if self.data is None:
+            raise ValueError("No data loaded. Use load_data() first.")
+        self._init_advanced_analytics()
+        return self.advanced_analytics.trend_analysis(time_column=time_column)
+
+    def analyze_distribution(self):
+        """
+        Analyze data distribution patterns.
+
+        Returns
+        -------
+        dict
+            Distribution analysis for each numeric column
+        """
+        if self.data is None:
+            raise ValueError("No data loaded. Use load_data() first.")
+        self._init_advanced_analytics()
+        return self.advanced_analytics.distribution_analysis()
+
+    def assess_data_quality(self):
+        """
+        Comprehensive data quality assessment.
+
+        Returns
+        -------
+        dict
+            Quality metrics and recommendations
+        """
+        if self.data is None:
+            raise ValueError("No data loaded. Use load_data() first.")
+        self._init_advanced_analytics()
+        return self.advanced_analytics.data_quality_assessment()
+
+    def advanced_analysis(self):
+        """
+        Generate comprehensive advanced analysis report.
+
+        Returns
+        -------
+        dict
+            Complete analysis with correlations, anomalies, trends, and recommendations
+        """
+        if self.data is None:
+            raise ValueError("No data loaded. Use load_data() first.")
+        self._init_advanced_analytics()
+        return self.advanced_analytics.generate_comprehensive_report()
 
     def create_report(self, output_format="html"):
         """
