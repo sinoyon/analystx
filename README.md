@@ -185,6 +185,7 @@ mypy src/
 - [ ] Cloud integration (AWS, GCP, Azure)
 - [ ] Advanced forecasting models
 
+
 ---
 
 ## 🐛 Bug Reports & Feature Requests
